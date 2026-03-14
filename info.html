@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Item Information</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+<nav class="btn">
+<h1>Emergency Item and Information</h1>
+<a href="Checklist.html">⬅ Back</a>
+</nav>
+</header>
+
+<section class="container">
+
+<div class="info-box">
+
+<h2 id="itemName"></h2>
+<img id="itemImage" width="300">
+<p id="itemDescription"></p>
+
+</div>
+
+</section>
+
+<script>
+
+// Get item from URL
+const params = new URLSearchParams(window.location.search);
+const item = params.get("item");
+
+// Item database
+const items = {
+
+bag:{
+image:"bag.jpg",
+description:"A durable and spacious bag to store and carry all your emergency supplies safely."
+},
+
+blanket:{
+image:"blanket.jpg",
+description:"A warm emergency blanket to retain body heat during cold conditions."
+},
+
+cellphone:{
+image:"cellphone.jpg",
+description:"A cellphone allows communication and calling for help during emergencies."
+},
+
+first_aid_kit:{
+image:"first_aid_kit.jpg",
+description:"A first aid kit contains medical supplies to treat injuries."
+},
+
+flashlight:{
+image:"flashlight.jpg",
+description:"A flashlight provides light during power outages."
+},
+
+food:{
+image:"food.jpg",
+description:"Non-perishable food supplies are essential during disasters."
+},
+
+glasses:{
+image:"glasses.jpg",
+description:"Glasses help maintain clear vision during emergencies."
+},
+
+hygiene:{
+image:"hygiene.jpg",
+description:"Hygiene kits maintain cleanliness and prevent infections."
+},
+
+knife:{
+image:"knife.jpg",
+description:"A multipurpose knife helps in survival tasks."
+},
+
+radio:{
+image:"radio.jpg",
+description:"A battery-powered radio receives emergency alerts."
+},
+
+raincoat:{
+image:"raincoat.jpg",
+description:"A raincoat protects you from rain and keeps you dry."
+},
+
+tools:{
+image:"tools.jpg",
+description:"Emergency tools help with repairs and rescue tasks."
+},
+
+toothbrush:{
+image:"toothbrush.jpg",
+description:"A toothbrush maintains oral hygiene during emergencies."
+},
+
+tsinelas:{
+image:"tsinelas.jpg",
+description:"Sturdy slippers protect your feet during disasters."
+},
+
+water:{
+image:"water.jpg",
+description:"Clean drinking water is essential for survival."
+}
+
+};
+
+// Normalize item name
+const key = item ? item.toLowerCase().replace(/\s+/g,"_") : "";
+
+// Show item
+document.getElementById("itemName").textContent = item || "Unknown Item";
+
+if(items[key]){
+
+document.getElementById("itemImage").src = items[key].image;
+document.getElementById("itemDescription").textContent = items[key].description;
+
+// Female voice speech
+function speakFemale(text){
+
+let voices = speechSynthesis.getVoices();
+
+let femaleVoice = voices.find(v =>
+v.name.toLowerCase().includes("zira") ||
+v.name.toLowerCase().includes("susan") ||
+v.name.toLowerCase().includes("female")
+) || voices[0];
+
+const msg = new SpeechSynthesisUtterance(text);
+msg.voice = femaleVoice;
+msg.rate = 0.8;
+msg.pitch = 1.2;
+
+speechSynthesis.speak(msg);
+
+}
+
+if(speechSynthesis.getVoices().length === 0){
+speechSynthesis.onvoiceschanged = () => speakFemale(items[key].description);
+}else{
+speakFemale(items[key].description);
+}
+
+}else{
+
+document.getElementById("itemDescription").textContent =
+"No description available for this item yet.";
+
+}
+
+</script>
+
+</body>
+</html>

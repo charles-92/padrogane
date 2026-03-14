@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ReadyKit Emergency Guide</title>
+
+<link rel="stylesheet" href="style.css">
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<section id="media">
+
+<h2>➡️ ITEM ⬅️</h2>
+
+  <figure class="items-style">
+  <img src="1.jpg" alt="Emergency Book" class="hard-image">
+  <figcaption>this is the item for incoming disaster</figcaption>
+</figure>
+
+<div class="media-container">
+
+<h3>VIDEO TIPS</h3>
+
+<!-- Video -->
+<video controls width="100%">
+<source src="56.mp4" type="video/mp4">
+</video>
+
+<!-- Button -->
+<a class="btn" href="checklist.html">
+Back to Emergency Kit
+</a>
+
+<!-- Telegram icon -->
+<div class="social-links">
+<a href="https://telegram.org" target="_blank">
+<i class="fab fa-telegram-plane"></i>
+</a>
+</div>
+
+</div>
+
+</section>
+
+
+<section id="resources">
+
+<div class="link-cards\">
+<ul>
+<!-- Future links -->
+</ul>
+</div>
+
+</section>
+
+
+<footer>
+<p>CONTACT, FACEBOOK, youtube, telegram, tiktok</p>
+<!-- Social Icons -->
+<div class="icons">
+<a href="https://www.facebook.com/groups/1901928903590728"><i class="fa-brands fa-facebook"></i></a>
+<a href="mailto:example@email.com"><i class="fa-solid fa-envelope"></i></a>
+<a href="https://www.scribd.com/document/573936727/Bacolod-Emergency-Hotline-Numbers"><i class="fa-solid fa-phone"></i></a>
+<a href="https://www.youtube.com/watch?v=ay416AyoqRU"><i class="fa-brands fa-youtube"></i></a>
+<a href="https://web.telegram.org/a/"><i class="fa-brands fa-telegram-plane"></i></a>
+<a href="https://www.tiktok.com/live"><i class="fa-brands fa-tiktok"></i></a>
+</div>
+</footer>
+
+</body>
+</html>
+
+
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+
+  // Function to speak any text with a female voice
+  function speak(text){
+    if('speechSynthesis' in window){
+      let voices = window.speechSynthesis.getVoices();
+      // Try to select a female voice
+      let femaleVoice = voices.find(v => 
+        v.name.toLowerCase().includes('zira') || 
+        v.name.toLowerCase().includes('susan') || 
+        v.name.toLowerCase().includes('female')
+      ) || voices[0]; // fallback if not found
+
+      const msg = new SpeechSynthesisUtterance(text);
+      msg.voice = femaleVoice;
+      msg.lang = 'en-US';
+      msg.rate = 1;    // normal speed
+      msg.pitch = 1.2; // slightly higher pitch for female tone
+      window.speechSynthesis.speak(msg);
+    }
+  }
+
+  // Speak welcome message on page load
+  function speakWelcome(){
+    speak("This is a image and Video tips for disaster");
+  }
+
+  // Some browsers load voices asynchronously
+  if (speechSynthesis.getVoices().length === 0){
+    window.speechSynthesis.onvoiceschanged = speakWelcome;
+  } else {
+    speakWelcome();
+  }
+
+  // Add click feedback for nav buttons
+  const navButtons = document.querySelectorAll('nav a');
+  navButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      speak("You clicked " + button.textContent);
+    });
+  });
+
+});
+</script>

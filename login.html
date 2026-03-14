@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login - ReadyKit</title>
+
+<style>
+body{
+  font-family: "Courier New", monospace;
+  background: radial-gradient(circle at top,#0f2027,#090a0f);
+  color:#00ff9c;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  margin:0;
+}
+
+.box{
+  background:#0d0d0d;
+  border:1px solid #00ff9c;
+  padding:35px;
+  border-radius:8px;
+  text-align:center;
+  width:300px;
+  box-shadow:0 0 20px rgba(0,255,156,0.3);
+}
+
+h2{ margin-bottom:20px; }
+
+input{
+  display:block;
+  width:93%;
+  margin:12px 0;
+  padding:10px;
+  background:black;
+  color:#00ff9c;
+  border:1px solid #00ff9c;
+  border-radius:4px;
+  font-family:"Courier New", monospace;
+}
+
+button{
+  width:100%;
+  padding:10px;
+  background:black;
+  color:#00ff9c;
+  border:1px solid #00ff9c;
+  cursor:pointer;
+  font-family:"Courier New", monospace;
+  transition:0.3s;
+  margin-top:10px;
+}
+
+button:hover{
+  background:#00ff9c;
+  color:black;
+  box-shadow:0 0 10px #00ff9c;
+}
+
+a{ color:#00ff9c; text-decoration:none; }
+a:hover{ text-decoration:underline; }
+
+.terminal{
+  text-align:left;
+  font-size:17px;
+  margin-bottom:15px;
+  color:#00ff9c;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<div class="terminal">
+> initializing system... <br>
+> loading security modules... <br>
+> access ready...
+</div>
+
+<h2>Login to open the site</h2>
+
+<input type="text" id="username" placeholder="Username">
+<input type="password" id="password" placeholder="Password">
+
+<button onclick="login()">Login</button>
+
+<!-- Full logout button -->
+<button id="logoutBtn">Logout Accounts</button>
+
+<p>Don't have an account? <a href="register.html">Register</a></p>
+
+</div>
+
+<script>
+function login() {
+    let user = document.getElementById("username").value;
+    let pass = document.getElementById("password").value;
+
+    let storedUser = localStorage.getItem("username");
+    let storedPass = localStorage.getItem("password");
+
+    if(user === storedUser && pass === storedPass){
+        localStorage.setItem("loggedIn","true");
+        alert("Access successful");
+        window.location.href = "index.html"; 
+    } else {
+        alert("Access Denied");
+    }
+}
+
+// Logout button: remove all login info
+document.getElementById("logoutBtn").addEventListener("click", function(){
+    localStorage.removeItem("loggedIn");
+    localStorage.removeItem("username");
+    localStorage.removeItem("password");
+    alert("Your accounts logged out!");
+    document.getElementById("username").value = "";
+    document.getElementById("password").value = "";
+});
+</script>
+
+</body>
+</html>

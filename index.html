@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ReadyKit | Disaster Preparedness</title>
+
+<!-- Your CSS -->
+<link rel="stylesheet" href="style.css">
+
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<header>
+<h1>Disaster Preparedness</h1>
+<p>Disaster Emergency Kit Organizer</p>
+
+<nav>
+  <div class="btn2">
+<a href="index.html">Home</a>
+<a href="Checklist.html">Emergency Kit</a>
+<a href="tips.html">Disaster Tips</a>
+</nav>
+</header>
+
+<section class="container">
+
+<figure class="styled-figure">
+  <img src="1.png" alt="Emergency Book" class="normal-image">
+  <figcaption>Emergency Preparedness image</figcaption>
+</figure>
+
+<div class="white-text">
+<h3>Prepare Before Disaster Strikes</h3>
+
+<p>
+Disasters, whether natural—such as earthquakes, 
+floods, typhoons, or fires—or human-induced, 
+such as industrial accidents, have profound 
+and far-reaching impacts. They cause loss of life, 
+destruction of property, and disruption of essential 
+services, often displacing communities and affecting 
+livelihoods. Beyond immediate physical damage, disasters 
+can lead to long-term economic losses, mental health 
+challenges, and strain on healthcare and social systems.
+ Vulnerable groups—such as low-income populations, the 
+ elderly, and children—are often disproportionately 
+ affected, highlighting the social and economic 
+ inequalities that disasters tend to exacerbate.
+</p>
+
+<p>
+Managing disasters presents significant challenges for governments,
+ communities, and organizations. Rapid response efforts are often 
+ hindered by inadequate infrastructure, limited resources,
+  or poor coordination among emergency services. Predicting 
+  and preparing for disasters is further complicated by 
+  climate change, urbanization, and environmental degradation,
+   which increase both the frequency and severity of events. 
+   Moreover, communication gaps and low public awareness 
+   can delay evacuations and recovery efforts, amplifying
+    the overall impact of disasters on affected populations.
+</p>
+
+<p>
+Despite their destructive nature, disasters offer valuable 
+lessons in resilience, preparedness, and social cooperation.
+ Effective disaster management strategies—including early
+  warning systems, community education, and emergency
+   response planning—can significantly reduce casualties 
+   and speed up recovery. Communities that cultivate strong 
+   social networks and share resources tend to recover more
+    quickly and sustainably. Reflecting on past disasters 
+    encourages policymakers and societies to address underlying
+     vulnerabilities, invest in resilient infrastructure, 
+     and promote a culture of preparedness, ultimately
+      strengthening human adaptability in the face of 
+      future crises.
+</p>
+</div>
+
+<a class="btn" href="checklist.html">Start Preparing</a>
+<a class="btn" href="login.html">login&logout</a>
+
+</section>
+
+
+<footer>
+<p>CONTACT, FACEBOOK, youtube, telegram, tiktok</p>
+<!-- Social Icons -->
+<div class="icons">
+<a href="https://www.facebook.com/groups/1901928903590728"><i class="fa-brands fa-facebook"></i></a>
+<a href="mailto:example@email.com"><i class="fa-solid fa-envelope"></i></a>
+<a href="https://www.scribd.com/document/573936727/Bacolod-Emergency-Hotline-Numbers"><i class="fa-solid fa-phone"></i></a>
+<a href="https://www.youtube.com/watch?v=ay416AyoqRU"><i class="fa-brands fa-youtube"></i></a>
+<a href="https://web.telegram.org/a/"><i class="fa-brands fa-telegram-plane"></i></a>
+<a href="https://www.tiktok.com/live"><i class="fa-brands fa-tiktok"></i></a>
+</div>
+</footer>
+
+</body>
+</html>
+
+
+
+
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+
+  // Function to speak text using a female voice
+  function speak(text){
+    if('speechSynthesis' in window){
+      let voices = window.speechSynthesis.getVoices();
+
+      // Try to select a female voice (Zira on Windows, Susan on Mac, or any with 'female' in name)
+      let femaleVoice = voices.find(v => 
+        v.name.toLowerCase().includes('zira') || 
+        v.name.toLowerCase().includes('susan') || 
+        v.name.toLowerCase().includes('female')
+      ) || voices[0]; // fallback if none found
+
+      const msg = new SpeechSynthesisUtterance(text);
+      msg.voice = femaleVoice;
+      msg.lang = 'en-US';
+      msg.rate = 0.8;    // normal speed
+      msg.pitch = 1.2; // slightly higher pitch for female tone
+      window.speechSynthesis.speak(msg);
+    }
+  }
+
+  // Speak welcome message on page load
+  function speakWelcome(){
+    speak("hello?? everyone welcome to my website");
+  }
+
+  // Handle asynchronous voice loading
+  if (speechSynthesis.getVoices().length === 0){
+    window.speechSynthesis.onvoiceschanged = speakWelcome;
+  } else {
+    speakWelcome();
+  }
+
+  // Add click feedback for nav buttons
+  const navButtons = document.querySelectorAll('nav a');
+  navButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      speak("You clicked " + button.textContent);
+    });
+  });
+  
+
+});
+</script>

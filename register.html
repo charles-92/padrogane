@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Register - ReadyKit</title>
+<style>
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: radial-gradient(circle at top, #0f2027, #090a0f);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  color: #00ff9c;
+}
+
+/* LOGIN BOX */
+
+.box {
+  background: rgba(15, 15, 15, 0.95);
+  padding: 35px;
+  border-radius: 12px;
+  text-align: center;
+  width: 320px;
+
+  border: 1px solid #00ff9c;
+
+  box-shadow:
+    0 0 20px rgba(0,255,156,0.25),
+    0 0 40px rgba(0,255,156,0.15);
+}
+
+/* TITLE */
+
+.box h2{
+  margin-bottom:20px;
+  letter-spacing:1px;
+}
+
+/* INPUT FIELDS */
+
+input {
+  display: block;
+  width: 92%;
+  margin: 12px auto;
+  padding: 10px;
+
+  background: #000;
+  color: #00ff9c;
+
+  border: 1px solid #00ff9c;
+  border-radius: 6px;
+
+  outline: none;
+  transition: 0.3s;
+}
+
+input:focus{
+  box-shadow:0 0 8px #00ff9c;
+}
+
+/* BUTTON */
+
+button {
+  width:100%;
+  background: transparent;
+  color: #00ff9c;
+
+  padding: 10px;
+  border: 1px solid #00ff9c;
+  border-radius: 6px;
+
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover{
+  background:#00ff9c;
+  color:#000;
+  box-shadow:0 0 10px #00ff9c;
+}
+
+/* LINK */
+
+a {
+  color: #00ff9c;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<div class="box">
+<h2>Register the account</h2>
+
+<input type="text" id="newUsername" placeholder="Username">
+<input type="password" id="newPassword" placeholder="Password">
+
+<button onclick="register()">Register</button>
+<p>Already have an account? <a href="login.html">Login</a></p>
+</div>
+
+<script>
+function register() {
+    let user = document.getElementById("newUsername").value;
+    let pass = document.getElementById("newPassword").value;
+
+    if(user && pass) {
+        localStorage.setItem("username", user);
+        localStorage.setItem("password", pass);
+        alert("Registration successful! Please login.");
+        window.location.href = "login.html";
+    } else {
+        alert("Please enter username and password!");
+    }
+}
+</script>
+
+</body>
+</html>

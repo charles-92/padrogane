@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Emergency Kit Checklist</title>
+<link rel="stylesheet" href="style.css">
+<style>
+/* Minimal styles for progress bar */
+.progress-container {
+  width: 100%;
+  background-color: #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  height: 25px;
+}
+
+#progressBar {
+  width: 0%;
+  height: 100%;
+  background-color: green;
+  border-radius: 5px;
+  text-align: center;
+  color: white;
+  line-height: 25px;
+}
+.white-text { color: white; margin-bottom: 20px; }
+.btn { margin: 5px; padding: 5px 10px; }
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Emergency Kit Checklist</h1>
+<div class="btn2">
+<nav>
+<a href="index.html">Home</a>
+<a href="Checklist.html">Emergency Kit</a>
+<a href="tips.html">Disaster Tips</a>
+</nav>
+</header>
+
+<section class="container">
+
+<h2>TYPE THE EMERGENCY ITEM SUPPLIES</h2>
+
+<div class="add-box">
+  <input id="itemInput" type="text" placeholder="Enter emergency item">
+  <button onclick="addItem()">Add Item</button>
+</div>
+
+<table id="listTable">
+  <thead>
+    <tr>
+      <th>Num</th>
+      <th>Item</th>
+      <th>Image item</th>
+      <th>✅</th>
+      <th>Item info</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<h3>Preparedness Level</h3>
+<div class="progress-container">
+  <div id="progressBar"></div>
+</div>
+<div class="white-text">
+  <p id="progressText">0% Ready</p>
+</div>
+
+<button class="btn" onclick="resetList()">Reset Checklist</button>
+<a class="btn" href="image.html">Emergency Items for Disaster</a>
+
+</section>
+
+<footer>
+<p>CONTACT, FACEBOOK, youtube, telegram, tiktok</p>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<div class="icons">
+<a href="https://www.facebook.com/groups/1901928903590728"><i class="fa-brands fa-facebook"></i></a>
+<a href="mailto:example@email.com"><i class="fa-solid fa-envelope"></i></a>
+<a href="https://www.scribd.com/document/573936727/Bacolod-Emergency-Hotline-Numbers"><i class="fa-solid fa-phone"></i></a>
+<a href="https://www.youtube.com/watch?v=ay416AyoqRU"><i class="fa-brands fa-youtube"></i></a>
+<a href="https://www.tiktok.com/live"><i class="fa-brands fa-tiktok"></i></a>
+</div>
+
+</footer>
+
+<script>
+let count = 0;
+
+function addItem() {
+  const input = document.getElementById("itemInput");
+  const value = input.value.trim();
+  if (!value) return alert("Please enter an item!");
+
+  count++;
+  const table = document.getElementById("listTable").getElementsByTagName('tbody')[0];
+  const row = table.insertRow();
+
+  // Num
+  const cellNum = row.insertCell(0);
+  cellNum.textContent = count;
+
+  // Item Name
+  const cellItem = row.insertCell(1);
+  cellItem.textContent = value;
+
+  // Image
+const cellImage = row.insertCell(2);
+const img = document.createElement("img");
+
+const filename = value.toLowerCase().replace(/\s+/g, "_") + ".jpg";
+
+img.src = filename; // removed item/ folder
+img.alt = value;
+
+img.style.maxWidth = "150px";
+img.style.maxHeight = "150px";
+img.style.objectFit = "cover";
+
+cellImage.appendChild(img);
+
+  // Checkbox
+  const cellCheck = row.insertCell(3);
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.onchange = updateProgress;
+  cellCheck.appendChild(checkbox);
+
+// Info Button
+const cellInfo = row.insertCell(4);
+
+const infoBtn = document.createElement("button");
+infoBtn.textContent = "Info";
+
+infoBtn.onclick = () => {
+  window.location.href = "info.html?item=" + encodeURIComponent(value);
+};
+
+cellInfo.appendChild(infoBtn);
+
+  speakFemale("Added " + value);
+  input.value = "";
+  updateProgress();
+}
+
+function updateNumbers() {
+  const table = document.getElementById("listTable").getElementsByTagName('tbody')[0];
+  for (let i = 0; i < table.rows.length; i++) {
+    table.rows[i].cells[0].textContent = i + 1;
+  }
+  count = table.rows.length;
+}
+
+function resetList() {
+  const table = document.getElementById("listTable").getElementsByTagName('tbody')[0];
+  table.innerHTML = "";
+  count = 0;
+  updateProgress();
+}
+
+// Update progress bar based on checked items
+function updateProgress() {
+  const table = document.getElementById("listTable").getElementsByTagName('tbody')[0];
+  const rows = table.rows;
+  if (rows.length === 0) {
+    document.getElementById("progressBar").style.width = "0%";
+    document.getElementById("progressText").textContent = "0% Ready";
+    return;
+  }
+  let checked = 0;
+  for (let i = 0; i < rows.length; i++) {
+    if (rows[i].cells[3].firstChild.checked) checked++;
+  }
+  let percent = Math.round((checked / rows.length) * 100);
+  document.getElementById("progressBar").style.width = percent + "%";
+  document.getElementById("progressText").textContent = percent + "% Ready";
+}
+
+// Text-to-speech
+function speakFemale(text) {
+  if ('speechSynthesis' in window) {
+    let voices = window.speechSynthesis.getVoices();
+    let femaleVoice = voices.find(v =>
+      v.name.toLowerCase().includes('zira') ||
+      v.name.toLowerCase().includes('susan') ||
+      v.name.toLowerCase().includes('female')
+    ) || voices[0];
+
+    let msg = new SpeechSynthesisUtterance(text);
+    msg.voice = femaleVoice;
+    msg.lang = 'en-US';
+    msg.rate = 1;
+    msg.pitch = 1.2;
+    window.speechSynthesis.speak(msg);
+  }
+}
+
+if (typeof speechSynthesis !== 'undefined') {
+  speechSynthesis.onvoiceschanged = () => {};
+}
+</script>
+
+</body>
+</html>
